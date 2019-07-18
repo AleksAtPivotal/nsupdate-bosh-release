@@ -1,0 +1,11 @@
+---
+name: custom-dns-update
+
+templates:
+  pre-start.sh.erb: bin/pre-start
+
+properties:
+  search:
+    description: Set search domain
+    example: "pivotal.io"
+    default: "pivotal.io"

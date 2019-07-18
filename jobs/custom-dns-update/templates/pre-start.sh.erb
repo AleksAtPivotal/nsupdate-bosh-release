@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -ex
+
+sed -i '/^search/d' /etc/resolvconf/resolv.conf.d/custom
+
+<% if_p("search") do |domain| %>
+echo "search <%= domain %>" >> /etc/resolvconf/resolv.conf.d/custom
+<% end %>
+
+/sbin/resolvconf -u
+
+echo "Test echo functionality and things"
+
+export ADDR=$(/sbin/ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | sed -e s/.*://)
+export HOST=$(hostname)
+export DNSSERVER=$(cat /etc/resolv.conf | grep -i nameserver | head -1 | awk '{print $2}')
+
+<% if_p("search") do |domain| %>
+    echo "server $DNSSERVER
+    update add $HOST.<%= domain %> 3600 IN A $ADDR
+    send
+    quit
+    " > /tmp/nsupdate.txt
+    nsupdate /tmp/nsupdate.txt
+
+<% end %>
