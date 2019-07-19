@@ -1,0 +1,14 @@
+name: nsupdate-bosh
+version: 1.0.0-beta.2
+commit_hash: 83e9185
+uncommitted_changes: true
+jobs:
+- name: custom-dns-update
+  version: c738f1608fef26c910bf3f68b0a7880c082cc5a1dac4a444d9f4b619aca631d5
+  fingerprint: c738f1608fef26c910bf3f68b0a7880c082cc5a1dac4a444d9f4b619aca631d5
+  sha1: sha256:4a030abb1ce2330fe5ad1496ea3a310d2daff7d6570098d70b3020bb51151e8c
+  packages: []
+license:
+  version: eefa533b44473426f0d39cb7de4a5de1342863955201ca83ddaefe4a0c96d174
+  fingerprint: eefa533b44473426f0d39cb7de4a5de1342863955201ca83ddaefe4a0c96d174
+  sha1: sha256:cf0afc9c09bbebce629250581344b65c2d411135b6fdf94cedb1d2850637f901

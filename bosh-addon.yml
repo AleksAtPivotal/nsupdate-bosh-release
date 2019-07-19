@@ -1,0 +1,11 @@
+releases:
+- name: nsupdate-bosh
+  version: 1.0.0-beta.2
+addons:
+- name: nsupdate-custom
+  jobs:
+  - name: custom-dns-update
+    release: nsupdate-bosh
+    properties:
+      nsupdate-bosh:
+        search: "pivotal.io"
