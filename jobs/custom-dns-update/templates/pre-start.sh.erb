@@ -3,6 +3,7 @@
 set -ex
 
 sed -i '/^search/d' /etc/resolvconf/resolv.conf.d/tail
+export UPDATEDAYS=7d
 
 <% if_p("search") do |domain| %>
 echo "search <%= domain %>" >> /etc/resolvconf/resolv.conf.d/tail
@@ -10,6 +11,7 @@ echo "search <%= domain %>" >> /etc/resolvconf/resolv.conf.d/tail
 
 /sbin/resolvconf -u
 
+update_dns () {
 export ADDR=$(/sbin/ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | sed -e s/.*://)
 export HOST=$(hostname)
 export DNSSERVER=$(cat /etc/resolv.conf | grep -i nameserver | sed -n 2p | awk '{print $2}')
@@ -23,3 +25,10 @@ quit
     nsupdate /tmp/nsupdate.txt
 
 <% end %>
+
+}
+
+while true; do
+    update_dns
+    sleep $UPDATEDAYS
+done
