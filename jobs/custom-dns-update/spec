@@ -2,10 +2,16 @@
 name: custom-dns-update
 
 templates:
-  pre-start.sh.erb: bin/pre-start
+  start.sh.erb: bin/start.sh
+  stop.sh.erb: bin/stop.sh
+  ctl.sh: bin/ctl
 
 properties:
-  search:
+  domainname:
     description: Set search domain
     example: "pivotal.io"
     default: "pivotal.io"
+  master-dns-server:
+    description: Master DNS Server IP addresss
+    example: "192.168.1.1"
+    default: "192.168.1.1"

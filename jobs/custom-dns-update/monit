@@ -1,0 +1,5 @@
+check process custom-dns-update
+  with pidfile "/var/vcap/sys/run/custom-dns-update/custom-dns-update.pid"
+  start program "/var/vcap/jobs/custom-dns-update/bin/ctl start"
+  stop program "/var/vcap/jobs/custom-dns-update/bin/ctl stop"
+  group vcap

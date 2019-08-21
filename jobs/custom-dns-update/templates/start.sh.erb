@@ -1,0 +1,26 @@
+#!/bin/bash
+
+sed -i '/^search/d' /etc/resolvconf/resolv.conf.d/tail
+export UPDATEDAYS=7d
+
+echo "search <%= p("domainname") %>" >> /etc/resolvconf/resolv.conf.d/tail
+
+/sbin/resolvconf -u
+
+export ADDR=$(/sbin/ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | sed -e s/.*://)
+export HOST=$(hostname)
+
+echo "server <%= p("master-dns-server") %>
+update delete $HOST.<%= p("domainname") %> A
+update add $HOST.<%= p("domainname") %> 1800 IN A $ADDR
+send
+quit
+" > $1/nsupdate.txt
+
+
+while true; do
+    echo $(date) : Starting NSUpdate 
+    nsupdate $1/nsupdate.txt
+    echo $(date) : Sleeping for $UPDATEDAYS...
+    sleep $UPDATEDAYS
+done

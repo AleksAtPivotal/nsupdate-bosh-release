@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export HOST=$(hostname)
+
+echo "server <%= p("master-dns-server") %>
+update delete $HOST.<%= p("domainname") %> A
+send
+quit
+" > $1/nsupdate.txt
+
+echo $(date) : Starting NSUpdate 
+nsupdate $1/nsupdate.txt
