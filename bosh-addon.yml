@@ -1,11 +1,11 @@
 releases:
 - name: nsupdate-bosh
-  version: 1.0.0-beta.2
+  version: 1.0.0-beta
 addons:
 - name: nsupdate-custom
   jobs:
   - name: custom-dns-update
     release: nsupdate-bosh
     properties:
-      nsupdate-bosh:
-        search: "pivotal.io"
+      domainname: "pcf.systems"
+      master_dns_server: "8.8.8.8"
